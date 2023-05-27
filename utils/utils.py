@@ -32,12 +32,8 @@ def get_date(date):
 
 def get_from(from_who):
     from_who_list = from_who.split(' ')
-    if len(from_who_list) > 2:
-        card_number = from_who_list[-1]
-        pay_system = ' '.join(from_who_list[:-1])
-    else:
-        card_number = from_who_list[1]
-        pay_system = from_who_list[0]
+    card_number = from_who_list[-1]
+    pay_system = ' '.join(from_who_list[:-1])
     from_list = [pay_system, card_number]
     return from_list
 
@@ -48,8 +44,8 @@ def get_account_data(data):
         card_number = '**' + ''.join(account_data[-4:])
     else:
         card_number = (''.join(account_data[:4]) + ' ' +
-                       ''.join(account_data[4:6]) + '** **** ' +
-                       ''.join(account_data[-4:]))
+                    ''.join(account_data[4:6]) + '** **** ' +
+                    ''.join(account_data[-4:]))
     return card_number
 
 
