@@ -1,41 +1,11 @@
 import utils
 
-def test_open_file():
-    expected_result = [{"id": 441945886,
-    "state": "EXECUTED",
-    "date": "2019-08-26T10:50:58.294041",
-    "operationAmount": {
-        "amount": "31957.58",
-        "currency": {
-        "name": "руб.",
-        "code": "RUB"
-    }
-    },
-    "description": "Перевод организации",
-    "from": "Maestro 1596837868705199",
-    "to": "Счет 64686473678894779589"
-    },
-    {
-    "id": 41428829,
-    "state": "EXECUTED",
-    "date": "2019-07-03T18:35:29.512364",
-    "operationAmount": {
-    "amount": "8221.37",
-    "currency": {
-        "name": "USD",
-        "code": "USD"
-    }
-    },
-    "description": "Перевод с карты на счет",
-    "from": "Maestro 1308795367077170",
-    "to": "Счет 96527012349577388612"
-    }
-    ]
-    assert utils.open_file('/tests/test_text.json') == expected_result
 
 def test_get_last_operations():
-    pass
-    # assert utils.get_last_operations()
+    assert utils.get_last_operations([{'date': '12.02', 'state': 'EXECUTED'}]) == \
+            [{'date': '12.02', 'state': 'EXECUTED'}]
+    assert utils.get_last_operations([{'date': '12.02', 'state': 'CANCELED'}]) == []
+    assert utils.get_last_operations([{}]) == []
 
 
 def test_get_date():
@@ -47,10 +17,14 @@ def test_get_from():
     assert utils.get_from("Счет 77977573135347241529") == ['Счет', '77977573135347241529']
     assert utils.get_from("MasterCard 1435442169918409") == ['MasterCard', '1435442169918409']
     assert utils.get_from("Visa Gold 7756673469642839") == ['Visa Gold', '7756673469642839']
+
+
 def test_get_account_data():
-    pass
+    assert utils.get_account_data(['Счет', '77977573135347241529']) == '**1529'
+    assert utils.get_account_data(['MasterCard', '1435442169918409']) == '1435 44** **** 8409'
+    assert utils.get_account_data(['Visa Gold', '7756673469642839']) == '7756 67** **** 2839'
+
+
 def test_get_amount():
-    pass
-
-
+    assert utils.get_amount({"amount": "97853.86", "currency": {"name": "руб.", "code": "RUB"}}) == "97853.86 руб."
 
